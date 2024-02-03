@@ -1,12 +1,6 @@
 # 節約貯金くん（仮）
 
-<img src="https://img.shields.io/badge/-Html5-E34F26.svg?logo=html5&style=plastic">
-<img src="https://img.shields.io/badge/-Vue.js-4FC08D.svg?logo=vue.js&style=plastic">
-<img src="https://img.shields.io/badge/-Javascript-F7DF1E.svg?logo=javascript&style=plastic">
-<img src="https://img.shields.io/badge/-Php-777BB4.svg?logo=php&style=plastic">
-<img src="https://img.shields.io/badge/-Mysql-4479A1.svg?logo=mysql&style=plastic">
-<img src="https://img.shields.io/badge/-Apache-D22128.svg?logo=apache&style=plastic">
-<img src="https://img.shields.io/badge/-Github-181717.svg?logo=github&style=plastic">
+<img src="https://img.shields.io/badge/-Html5-E34F26.svg?logo=html5&style=plastic"><img src="https://img.shields.io/badge/-Vue.js-4FC08D.svg?logo=vue.js&style=plastic"><img src="https://img.shields.io/badge/-Javascript-F7DF1E.svg?logo=javascript&style=plastic"><img src="https://img.shields.io/badge/-Php-777BB4.svg?logo=php&style=plastic"><img src="https://img.shields.io/badge/-Mysql-4479A1.svg?logo=mysql&style=plastic"><img src="https://img.shields.io/badge/-Apache-D22128.svg?logo=apache&style=plastic"><img src="https://img.shields.io/badge/-Github-181717.svg?logo=github&style=plastic">
  
 節約貯金くん（仮）とは、
  
