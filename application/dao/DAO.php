@@ -1,15 +1,23 @@
 <?php
 //JSON形式で返却すること、文字形式がUTF-8だということの宣言
 
+// config.php
+require_once 'DAO_config.php';
+Config::setConfigDirectory(__DIR__ . DIRECTORY_SEPARATOR . 'config');
+
 header("Access-Control-Allow-Origin: *");
 header('Content-Type: application/json; charset=UTF-8');
-class setuyaku
+class setuyaku_DAO extends Config
 {
+    
     //DB接続
     function dbconnect()
     {
-        //要書き換え
-        $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8','webuser','abccsd2');
+        try {
+            $pdo = new PDO('mysql:host='. Config::get('DB_HOST') .';dbname='. Config::get('DB_NAME') .';charset=utf8',Config::get('DB_USER'),Config::get('DB_PASS'));
+        } catch (PDOException $e) {
+            exit('Error connecting ' . $e);
+        }
         return $pdo;
     }
 
