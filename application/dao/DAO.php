@@ -23,8 +23,10 @@ class setuyaku
         $ps->execute();
         $check_mail = $ps->fetch();
 
+        var_dump($check_mail['user_mail']);
+
         //既にメールアドレスが存在していた場合は登録処理を中止する
-        if($check_mail['user_mail'] === $mail){
+        if($check_mail['user_mail'] == $mail){
             return json_encode(0);
         //メールアドレスが存在していなかったらそのまま登録
         }else{
@@ -39,7 +41,21 @@ class setuyaku
 
     //ログイン
     function user_login($mail,$pass){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM users WHERE user_mail = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $mail, PDO::PARAM_STR);
+        $ps->execute();
+        $user_data = $ps->fetch();
 
+        return json_encode($user_data);
+
+        // print_r($check_user_data);
+        // if($check_user_data['user_pass'] === $pass){
+        //     return json_encode("あうあう");
+        // }else{
+        //     return json_encode(0);
+        // }
     }
 }
 ?>
