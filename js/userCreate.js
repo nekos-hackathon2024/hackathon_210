@@ -33,7 +33,7 @@ const vm = new Vue({
                 if(response.data == 0){
                   this.error = "このメールアドレスは既に使用されています。";
                 }else{
-                  alert("成功");
+                  alert("新規登録完了");
                   window.location.assign("./login.html");
                 }
               })
