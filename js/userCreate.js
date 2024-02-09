@@ -16,7 +16,7 @@ const vm = new Vue({
     methods: {
         //ユーザー新規登録処理
         createUser() {          
-            const url = "../application/api/userCreate.php";;
+            const url = "./application/api/userCreate.php";;
             const data = new FormData();
             data.append('user_mail', this.user_mail);
             data.append('user_pass', this.user_pass);
@@ -34,7 +34,7 @@ const vm = new Vue({
                   this.error = "このメールアドレスは既に使用されています。";
                 }else{
                   alert("成功");
-                  window.location.assign("./complete.php");
+                  window.location.assign("./login.html");
                 }
               })
               .catch(error => {
