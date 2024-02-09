@@ -12,7 +12,7 @@ const vm = new Vue({
     methods: {
         //ユーザーログイン処理
         loginUser() {          
-            const url = "../application/api/userLogin.php";
+            const url = "./application/api/userLogin.php";
             const data = new FormData();
             data.append('user_mail', this.user_mail);
             data.append('user_pass', this.user_pass);
@@ -30,6 +30,7 @@ const vm = new Vue({
                   console.log(response.data);
                   sessionStorage.setItem('name',response.data['user_name']);
                   this.user_name = response.data['user_name'];
+                  window.location.assign("./spending.html");
                 }
               })
               .catch(error => {
