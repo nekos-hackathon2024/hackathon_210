@@ -4,6 +4,7 @@ const vm = new Vue({
         user_mail:"",
         user_pass:"",
         error:"",
+        user_name:"",
     },
     mounted() {
       
@@ -18,17 +19,18 @@ const vm = new Vue({
             
             axios.post(url, data)
               .then(response => {
+                console.log(response.data)
                 // レスポンスを処理するコード
-                console.log(response.data);
-                // if(response.data == 0){
-                //   this.error = "メールアドレスまたはパスワードが間違っています。";
-                //   console.log(response.data);
-                // }else{
-                //     var array = response.data;
-                //     console.log(array);
-                //     sessionStorage.setItem('user_data',array['user_name']);
-                //     alert("ログイン成功");
-                // }
+                if(response.data === 0){
+                  console.log("失敗時分岐");
+                  console.log(response.data);
+                  this.error = "メールアドレスまたはパスワードが間違っています。";
+                }else{
+                  console.log("成功時分岐");
+                  console.log(response.data);
+                  sessionStorage.setItem('name',response.data['user_name']);
+                  this.user_name = response.data['user_name'];
+                }
               })
               .catch(error => {
                 // エラーハンドリングのコード
