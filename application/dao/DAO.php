@@ -14,7 +14,9 @@ class setuyaku_DAO extends Config
     function dbconnect()
     {
         try {
-            $pdo = new PDO('mysql:host='. Config::get('DB_HOST') .';dbname='. Config::get('DB_NAME') .';charset=utf8',Config::get('DB_USER'),Config::get('DB_PASS'));
+            // $pdo = new PDO('mysql:host='. Config::get('DB_HOST') .';dbname='. Config::get('DB_NAME') .';charset=utf8',Config::get('DB_USER'),Config::get('DB_PASS'));
+            $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'webuser', 'abccsd2',
+                    [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
         } catch (PDOException $e) {
             exit('Error connecting ' . $e);
         }
@@ -31,11 +33,10 @@ class setuyaku_DAO extends Config
         $ps->execute();
         $check_mail = $ps->fetch();
 
-        var_dump($check_mail['user_mail']);
 
         //既にメールアドレスが存在していた場合は登録処理を中止する
-        if($check_mail['user_mail'] == $mail){
-            return json_encode(0);
+        if(strcmp($check_mail['user_mail'],$mail)==0){
+            print json_encode(0);
         //メールアドレスが存在していなかったらそのまま登録
         }else{
             $sql = 'INSERT INTO users(user_mail, user_pass, user_name) VALUES (?,?,?)';
@@ -44,6 +45,7 @@ class setuyaku_DAO extends Config
             $ps->bindValue(2, $pass, PDO::PARAM_STR);
             $ps->bindValue(3, $name, PDO::PARAM_STR);
             $ps->execute();
+            print json_encode(1);
         }
     }
 
@@ -54,16 +56,23 @@ class setuyaku_DAO extends Config
         $ps = $pdo->prepare($sql);
         $ps->bindValue(1, $mail, PDO::PARAM_STR);
         $ps->execute();
-        $user_data = $ps->fetch();
 
-        return json_encode($user_data);
-
-        // print_r($check_user_data);
-        // if($check_user_data['user_pass'] === $pass){
-        //     return json_encode("あうあう");
-        // }else{
-        //     return json_encode(0);
-        // }
+        //fetch成功（データ取得時のみ実行）
+        if($user_data = $ps->fetch(PDO::FETCH_ASSOC)){
+            //今回はハッシュ化無し（危険）でパスワード突き合わせ
+            if($user_data['user_pass'] == $pass){
+                //データ取得成功
+                print json_encode($user_data);
+            }else{
+                //データ取得失敗
+                print json_encode(0);
+            }
+        }else{
+            //データ取得失敗
+            print json_encode(0);
+        }
     }
+
+        
 }
 ?>
