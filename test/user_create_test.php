@@ -10,9 +10,11 @@
 <body>
     <div id="app">
         e-mail:<input type="text" v-model="user_mail">
-        {{error}}
+        {{mail_err}}
         pass  :<input type="text" v-model="user_pass">
+        {{pass_err}}
         name  :<input type="text" v-model="user_name">
+        {{name_err}}
 
         <button @click="createUser()">送信</button>
     </div>
