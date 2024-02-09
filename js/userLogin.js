@@ -29,7 +29,6 @@ const vm = new Vue({
                   console.log("成功時分岐");
                   console.log(response.data);
                   sessionStorage.setItem('name',response.data['user_name']);
-                  this.user_name = response.data['user_name'];
                   window.location.assign("./spending.html");
                 }
               })
