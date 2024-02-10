@@ -9,37 +9,33 @@ const vm = new Vue({
         others: 0,
         today: "今日",
         dow: "",
-        ex_amount: 2000,
+        ex_amount: 0,
     },
     mounted() {
       this.today = this.getDate_today(1);
       this.user_id = sessionStorage.getItem('id');
       this.user_name = sessionStorage.getItem('name');
+      this.ex_amount = sessionStorage.getItem('targetAmount');
       this.dow = this.getDate_dow();
     },
     methods: {
-        //ユーザーログイン処理
-        loginUser() {          
-            const url = "./application/api/userLogin.php";
+        //支出登録処理
+        set_amounts_data() {          
+            const url = "./application/api/amount_data_set.php";
             const data = new FormData();
-            data.append('user_mail', this.user_mail);
-            data.append('user_pass', this.user_pass);
+            data.append('dow', this.dow);
+            data.append('Amount', this.totalNum);
+            data.append('user_id',this.user_id);
+            data.append('food_ex',this.food_ex);
+            data.append('trans_ex',this.trans_ex);
+            data.append('enterme_ex',this.enterme_ex);
+            data.append('others',this.others);
+            data.append('today',this.getDate_today(0));
             
             axios.post(url, data)
               .then(response => {
                 // レスポンスを処理するコード
-                if(typeof(response.data) == 'object'){
-                  console.log("成功時分岐");
-                  console.log(response.data);
-                  sessionStorage.setItem('name',response.data['user_name']);
-                  window.location.assign("./spending.html");
-                }else if(response.data === 1){
-                  console.log("失敗時分岐");
-                  console.log(response.data);
-                  this.error = "メールアドレスまたはパスワードが間違っています。";
-                } else {
-                  console.log("異常終了");
-                }
+                alert(response.data);
               })
               .catch(error => {
                 // エラーハンドリングのコード
