@@ -19,17 +19,18 @@ const vm = new Vue({
             
             axios.post(url, data)
               .then(response => {
-                console.log(response.data)
                 // レスポンスを処理するコード
-                if(response.data === 0){
-                  console.log("失敗時分岐");
-                  console.log(response.data);
-                  this.error = "メールアドレスまたはパスワードが間違っています。";
-                }else{
+                if(typeof(response.data) == 'object'){
                   console.log("成功時分岐");
                   console.log(response.data);
                   sessionStorage.setItem('name',response.data['user_name']);
                   window.location.assign("./spending.html");
+                }else if(response.data === 1){
+                  console.log("失敗時分岐");
+                  console.log(response.data);
+                  this.error = "メールアドレスまたはパスワードが間違っています。";
+                } else {
+                  console.log("異常終了");
                 }
               })
               .catch(error => {
