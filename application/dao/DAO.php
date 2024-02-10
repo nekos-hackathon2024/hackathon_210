@@ -77,7 +77,25 @@ class setuyaku_DAO extends Config
         }
     }
 
-    //
+    //支出登録
+    function amount_data_set($dow,$amount,$id,$food_ex,$trans_ex,$enterme_ex,$others,$today){
+        $pdo = $this->dbconnect();
+        $sql = 'INSERT INTO amounts(dow,Amount,user_id,food_ex,trans_ex,enterme_ex,others,today) VALUES (?,?,?,?,?,?,?,?)';
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $dow, PDO::PARAM_STR);
+        $ps->bindValue(2, $amount, PDO::PARAM_INT);
+        $ps->bindValue(3, $id, PDO::PARAM_INT);
+        $ps->bindValue(4, $food_ex, PDO::PARAM_INT);
+        $ps->bindValue(5, $trans_ex, PDO::PARAM_INT);
+        $ps->bindValue(6, $enterme_ex, PDO::PARAM_INT);
+        $ps->bindValue(7, $others, PDO::PARAM_INT);
+        $ps->bindValue(8, $today, PDO::PARAM_STR);
+        $ps->execute();
+
+        print json_encode("成功");
+
+    }
+
         
 }
 ?>

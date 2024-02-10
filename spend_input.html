@@ -13,10 +13,10 @@
     <div id="app">
         <div class="header">
             <div class="prog ">達成度</div>
-            <progress class="file" max="100" value="70"></progress>
+            <progress class="file" max="100" value="60"></progress>
             <div class="box money_struct">
                 <p class="money left">目標金額</p>
-                <input type="text" class="form content"></input>
+                <input type="text" class="form content" readonly v-model="ex_amount"></input>
                 <!-- <div class="form content">{{totalNum}}</div> -->
                 <p class="money right">円</p>
             </div>
@@ -89,7 +89,7 @@
                 </div>
 
             </div>
-            <div class="btn content input" @click="createUser()">支出を入力する</div>
+            <div class="btn content input" @click="set_amounts_data()">支出を入力する</div>
             <!-- <div class="btn">
                 <button class="input" type="button">支出を入力する</button>
             </div> -->
