@@ -34,7 +34,7 @@ body{
 
 progress{
     width: 70%;
-    height:20%;
+    height:24px;
 }
 
 .header .file{

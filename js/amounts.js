@@ -1,13 +1,21 @@
 const vm = new Vue({
     el: '#app',
     data: {
-        user_mail:"",
-        user_pass:"",
-        error:"",
-        user_name:"",
+        user_id: 0,
+        user_name: "",
+        food_ex: 0,
+        trans_ex: 0,
+        enterme_ex: 0,
+        others: 0,
+        today: "今日",
+        dow: "",
+        ex_amount: 2000,
     },
     mounted() {
-      
+      this.today = this.getDate_today(1);
+      this.user_id = sessionStorage.getItem('id');
+      this.user_name = sessionStorage.getItem('name');
+      this.dow = this.getDate_dow();
     },
     methods: {
         //ユーザーログイン処理
@@ -23,9 +31,8 @@ const vm = new Vue({
                 if(typeof(response.data) == 'object'){
                   console.log("成功時分岐");
                   console.log(response.data);
-                  sessionStorage.setItem('id',response.data['user_id']);
                   sessionStorage.setItem('name',response.data['user_name']);
-                  window.location.assign("./spend_input.html");
+                  window.location.assign("./spending.html");
                 }else if(response.data === 1){
                   console.log("失敗時分岐");
                   console.log(response.data);
@@ -48,6 +55,34 @@ const vm = new Vue({
         getQueryParam(paramName) {
           const urlParams = new URLSearchParams(window.location.search);
           return urlParams.get(paramName);
+        },
+        //今日の日付を取得する関数、0でyyyy-mm-dd。1でyyyy年mm月dd日
+        getDate_today(mode){
+            var dt = new Date();
+            var y = dt.getFullYear();
+            var m = ('00' + (dt.getMonth()+1)).slice(-2);
+            var d = ('00' + dt.getDate()).slice(-2);
+            if(mode == 0){
+                return (y + '-' + m + '-' + d);
+            }else{
+                return (y + '年' + m + '月' + d + '日');
+            }
+            
+        },
+        //曜日を取得する関数
+        getDate_dow(){
+            var WeekChars = [ "日", "月", "火", "水", "木", "金", "土" ];
+            var dObj = new Date();
+            var wDay = dObj.getDay();
+
+            console.log(WeekChars[wDay]);
+
+            return WeekChars[wDay];
         }
       },
+      computed: {
+        totalNum(){
+            return this.food_ex + this.trans_ex + this.enterme_ex + this.others
+        }
+      }
 })

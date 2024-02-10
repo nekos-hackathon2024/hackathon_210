@@ -10,89 +10,90 @@
 </head>
 
 <body>
-    <div class="header">
-        <div class="prog ">達成度</div>
-        <progress class="file" max="100" value="70"></progress>
-        <div class="box money_struct">
-            <p class="money left">目標金額</p>
-            <input type="text" class="form content"></input>
-            <p class="money right">円</p>
+    <div id="app">
+        <div class="header">
+            <div class="prog ">達成度</div>
+            <progress class="file" max="100" value="70"></progress>
+            <div class="box money_struct">
+                <p class="money left">目標金額</p>
+                <input type="text" class="form content"></input>
+                <!-- <div class="form content">{{totalNum}}</div> -->
+                <p class="money right">円</p>
+            </div>
         </div>
+
+        <div class="main">
+            <!-- 日付 -->
+            <div class="box date">
+                <p class="text left">日付</p>
+                <div id="current_date">
+                    {{getDate_today(1)}} ({{getDate_dow()}})
+                </div>
+            </div>
+            <!-- 支出 -->
+            <div class="box spend">
+                <p class="text spend left">支出</p>
+                <input type="text" class="form content" readonly v-model="totalNum"></input>
+                <!-- <div class="form content">{{totalNum}}</div> -->
+                <p class="spend right">円</p>
+            </div>
+
+            <!-- カテゴリー -->
+            <div class="category">
+                <p class="text">カテゴリー</p>
+
+
+                <!-- 食費 -->
+                <div class="jenre eat">
+                    <div class="picture red">
+                        <img src="./picture/食費.jpg">
+                        <p class = "cost">食費</p>
+                    </div>
+                    <div class="bar">
+                        <input type="text" class="form content" v-model.number="food_ex"></input>
+                    </div>
+                    <div class="money">円</div>
+                </div>
+                <!-- 交通費 -->
+                <div class="jenre traffic">
+                    <div class="picture orange">
+                        <img src="./picture/交通費.jpg">
+                        <p class = "cost">交通費</p>
+                    </div>
+                    <div class="bar">
+                        <input type="text" class="form content" v-model.number="trans_ex"></input>
+                    </div>
+                    <div class="money">円</div>
+                </div>
+                <!-- 交際費 -->
+                <div class="jenre entertainment">
+                    <div class="picture yellow">
+                        <img src="./picture/交際費.jpg">
+                        <p class = "cost">交際費</p>
+                    </div>
+                    <div class="bar">
+                        <input type="text" class="form content" v-model.number="enterme_ex"></input>
+                    </div>
+                    <div class="money">円</div>
+                </div>
+                <!-- その他 -->
+                <div class="jenre other">
+                    <div class="picture gray">
+                        <img src="./picture/その他.jpg">
+                        <p class = "cost">その他</p>
+                    </div>
+                    <div class="bar">
+                        <input type="text" class="form content" v-model.number="others"></input>
+                    </div>
+                    <div class="money">円</div>
+                </div>
+
+            </div>
+            <div class="btn content input" @click="createUser()">支出を入力する</div>
+            <!-- <div class="btn">
+                <button class="input" type="button">支出を入力する</button>
+            </div> -->
     </div>
-
-    <div class="main">
-        <!-- 日付 -->
-        <div class="box date">
-            <p class="text left">日付</p>
-            <div id="current_date">
-                <script>
-                    const options = { weekday: 'narrow', year: 'numeric', month: 'long', day: 'numeric' };
-                    document.getElementById("current_date").innerHTML = new Date().toLocaleDateString('ja-JP', options);
-                </script>
-            </div>
-        </div>
-        <!-- 支出 -->
-        <div class="box spend">
-            <p class="text spend left">支出</p>
-            <input type="text" class="form content"></input>
-            <p class="spend right">円</p>
-        </div>
-
-        <!-- カテゴリー -->
-        <div class="category">
-            <p class="text">カテゴリー</p>
-
-
-            <!-- 食費 -->
-            <div class="jenre eat">
-                <div class="picture red">
-                    <img src="./picture/食費.jpg">
-                    <p class = cost>食費</p>
-                </div>
-                <div class="bar">
-                    <input type="text" class="form content"></input>
-                </div>
-                <div class="money">円</div>
-            </div>
-            <!-- 交通費 -->
-            <div class="jenre traffic">
-                <div class="picture orange">
-                    <img src="./picture/交通費.jpg">
-                    <p class = cost>交通費</p>
-                </div>
-                <div class="bar">
-                    <input type="text" class="form content"></input>
-                </div>
-                <div class="money">円</div>
-            </div>
-            <!-- 交際費 -->
-            <div class="jenre entertainment">
-                <div class="picture yellow">
-                    <img src="./picture/交際費.jpg">
-                    <p class = cost>交際費</p>
-                </div>
-                <div class="bar">
-                    <input type="text" class="form content"></input>
-                </div>
-                <div class="money">円</div>
-            </div>
-            <!-- その他 -->
-            <div class="jenre other">
-                <div class="picture gray">
-                    <img src="./picture/その他.jpg">
-                    <p class = cost>その他</p>
-                </div>
-                <div class="bar">
-                    <input type="text" class="form content"></input>
-                </div>
-                <div class="money">円</div>
-            </div>
-
-        </div>
-        <div class="btn content input" @click="createUser()">支出を入力する</div>
-        <!-- <div class="btn">
-            <button class="input" type="button">支出を入力する</button>
-        </div> -->
     </div>
 
     <!-- bootstrap js -->
@@ -104,6 +105,6 @@
     <!-- JSONを扱うためのCDN -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- JSの読み込み -->
-    <script src="./js/userCreate.js"></script>
+    <script src="./js/amounts.js"></script>
 </body>
 </html>
