@@ -9,7 +9,9 @@ body{
 }
 
 .header img{
-    width:100%;
+    width:80%;
+    /* height:150px;
+    object-fit: cover; */
 }
 
 .name{
@@ -24,7 +26,10 @@ body{
     display:flex;
     flex-flow: column;
     height:500px;
-    margin:0 0 1em;
+}
+
+.main p{
+    margin:0;
 }
 
 .btn,
@@ -42,7 +47,7 @@ a.btn:hover{
 
 .form{
     margin:0 0.5em;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 
 .bar{

@@ -13,18 +13,26 @@
         <p>新規登録ページ(仮)</p>
     </div> -->
     <div class="header">
-        <img src="./picture/家計簿.png">
+        <img src="./picture/家計簿_sign.png">
     </div>
 
-    <div class="title_name">
+    <!-- <div class="title_name">
         <div class="name">
             <b>
                 Sign Up
             </b>
         </div>
-    </div>
+    </div> -->
 
     <div class="main" id="app">
+<!-- <p>パスワード</p> -->
+        <!-- ユーザー名 -->
+        <p class="form_label">
+            <div class="text-danger">{{name_err}}</div>
+            <span class="form_label_required">必須</span>ユーザー名
+        </p>
+        <input type="text" placeholder="例) まっちー" class="form content" v-model="user_name"></input>
+
         <!-- <p>メールアドレス</p> -->
         <p class="form_label">
             <div class="text-danger">{{mail_err}}</div>
@@ -37,7 +45,7 @@
             <div class="text-danger">{{pass_err}}</div>
             <span class="form_label_required">必須</span>パスワード
         </p>
-        <input type="text" placeholder="例) 12345" class="form content" v-model="user_pass"></input>
+        <input type="password" placeholder="例) 12345" class="form content" v-model="user_pass"></input>
 
         <!-- <p>パスワード</p> -->
         <!-- 一応こっちが名前欄という体でいじりました -->
@@ -45,7 +53,7 @@
             <div class="text-danger">{{name_err}}</div>
             <span class="form_label_required">必須</span>パスワード(確認)
         </p>
-        <input type="text" placeholder="例) 12345" class="form content" v-model="user_name"></input>
+        <input type="password" placeholder="例) 12345" class="form content" v-model="user_name"></input>
 
         <!-- 新規登録完了 -->
         <!-- <a href="./sign_up.html" class="btn content" v-model="user_name">新規登録</a> -->
