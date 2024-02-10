@@ -18,9 +18,9 @@ class setuyaku_DAO extends Config
                     [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 
             // $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'yuto', '1234',
-            //                [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-//             $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'webuser', 'abccsd2',
-//                     [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+                        //    [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+            // $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'webuser', 'abccsd2',
+                    // [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
         } catch (PDOException $e) {
             exit('Error connecting ' . $e);
         }
@@ -39,8 +39,8 @@ class setuyaku_DAO extends Config
 
 
         //既にメールアドレスが存在していた場合は登録処理を中止する
-        if(strcmp($check_mail['user_mail'],$mail)==0){
-            print json_encode(0);
+        if(strcmp($check_mail['user_mail'],$mail) == 0){
+            print json_encode(1);
         //メールアドレスが存在していなかったらそのまま登録
         }else{
             $sql = 'INSERT INTO users(user_mail, user_pass, user_name) VALUES (?,?,?)';
@@ -49,7 +49,7 @@ class setuyaku_DAO extends Config
             $ps->bindValue(2, $pass, PDO::PARAM_STR);
             $ps->bindValue(3, $name, PDO::PARAM_STR);
             $ps->execute();
-            print json_encode(1);
+            print json_encode(0);
         }
     }
 
@@ -69,11 +69,11 @@ class setuyaku_DAO extends Config
                 print json_encode($user_data);
             }else{
                 //データ取得失敗
-                print json_encode(0);
+                print json_encode(1);
             }
         }else{
             //データ取得失敗
-            print json_encode(0);
+            print json_encode(1);
         }
     }
 

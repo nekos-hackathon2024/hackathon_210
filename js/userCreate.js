@@ -31,10 +31,12 @@ const vm = new Vue({
                 // レスポンスを処理するコード
                 console.log(response.data);
                 if(response.data == 0){
-                  this.error = "このメールアドレスは既に使用されています。";
-                }else{
                   alert("新規登録完了");
                   window.location.assign("./login.html");
+                }else if(response.data == 1){
+                  this.error = "このメールアドレスは既に使用されています。";
+                }else {
+                  console.error("例外エラー");
                 }
               })
               .catch(error => {
