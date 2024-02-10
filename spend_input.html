@@ -5,63 +5,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./css/sytle_spend_input.css" type="text/css">
     <title>title</title>
 </head>
+
 <body>
     <div class="header">
-        <p class="header moji">達成度</p>
-        <input type="text" class="form content" v-model="user_pass"></input>
+        <div class="prog ">達成度</div>
+        <progress class="file" max="100" value="70"></progress>
+        <div class="box money_struct">
+            <p class="money left">目標金額</p>
+            <input type="text" class="form content"></input>
+            <p class="money right">円</p>
+        </div>
     </div>
 
+    <div class="main">
+        <!-- 日付 -->
+        <div class="box date">
+            <p class="text left">日付</p>
+            <div id="current_date">
+                <script>
+                    const options = { weekday: 'narrow', year: 'numeric', month: 'long', day: 'numeric' };
+                    document.getElementById("current_date").innerHTML = new Date().toLocaleDateString('ja-JP', options);
+                </script>
+            </div>
+        </div>
+        <!-- 支出 -->
+        <div class="box spend">
+            <p class="text spend left">支出</p>
+            <input type="text" class="form content"></input>
+            <p class="spend right">円</p>
+        </div>
 
-    <div class="picture eat">
-        <img src="./picture/食事.png">
-    </div>
+        <!-- カテゴリー -->
+        <div class="category">
+            <p class="text">カテゴリー</p>
 
-    <div class="picture traffic">
-        <img src="./picture/交通費.png">
-    </div>
 
-    <div class="picture entertainment">
-        <img src="./picture/交際費.png">
-    </div>
+            <!-- 食費 -->
+            <div class="jenre eat">
+                <div class="picture red">
+                    <img src="./picture/食費.jpg">
+                    <p class = cost>食費</p>
+                </div>
+                <div class="bar">
+                    <input type="text" class="form content"></input>
+                </div>
+                <div class="money">円</div>
+            </div>
+            <!-- 交通費 -->
+            <div class="jenre traffic">
+                <div class="picture orange">
+                    <img src="./picture/交通費.jpg">
+                    <p class = cost>交通費</p>
+                </div>
+                <div class="bar">
+                    <input type="text" class="form content"></input>
+                </div>
+                <div class="money">円</div>
+            </div>
+            <!-- 交際費 -->
+            <div class="jenre entertainment">
+                <div class="picture yellow">
+                    <img src="./picture/交際費.jpg">
+                    <p class = cost>交際費</p>
+                </div>
+                <div class="bar">
+                    <input type="text" class="form content"></input>
+                </div>
+                <div class="money">円</div>
+            </div>
+            <!-- その他 -->
+            <div class="jenre other">
+                <div class="picture gray">
+                    <img src="./picture/その他.jpg">
+                    <p class = cost>その他</p>
+                </div>
+                <div class="bar">
+                    <input type="text" class="form content"></input>
+                </div>
+                <div class="money">円</div>
+            </div>
 
-    <div class="picture other">
-        <img src="./picture/その他.png">
-    </div>
-
-    
-
-    <div class="main" id="app">
-        <!-- <p>メールアドレス</p> -->
-        <p class="form_label">
-            <div class="text-danger">{{mail_err}}</div>
-        <s  pan class="form_label_required">必須</s>メールアドレス
-        </p>
-        <input type="text" placeholder="例) example@gmail.com" class="form content" v-model="user_mail"></input>
-        
-        <!-- <p>パスワード</p> -->
-        <p class="form_label">
-            <div class="text-danger">{{pass_err}}</div>
-            <span class="form_label_required">必須</span>パスワード
-        </p>
-        <input type="text" placeholder="例) 12345" class="form content" v-model="user_pass"></input>
-
-        <!-- <p>パスワード</p> -->
-        <!-- 一応こっちが名前欄という体でいじりました -->
-        <p class="form_label">
-            <div class="text-danger">{{name_err}}</div>
-            <span class="form_label_required">必須</span>パスワード(確認)
-        </p>
-        <input type="text" placeholder="例) 12345" class="form content" v-model="user_name"></input>
-
-        <!-- 新規登録完了 -->
-        <!-- <a href="./sign_up.html" class="btn content" v-model="user_name">新規登録</a> -->
-        <!-- ページ遷移はuserCreate側で管理してます -->
-        <div class="btn content" @click="createUser()">新規登録</div>
-        <!-- ログインページへ遷移 -->
-        <a href="./login.html" class="bar">アカウントをお持ちの方はこちら</a>
-
+        </div>
+        <div class="btn content input" @click="createUser()">支出を入力する</div>
+        <!-- <div class="btn">
+            <button class="input" type="button">支出を入力する</button>
+        </div> -->
     </div>
 
     <!-- bootstrap js -->
