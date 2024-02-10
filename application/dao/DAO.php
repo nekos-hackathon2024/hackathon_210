@@ -14,13 +14,13 @@ class setuyaku_DAO extends Config
     function dbconnect()
     {
         try {
-            // $pdo = new PDO('mysql:host='. Config::get('DB_HOST') .';dbname='. Config::get('DB_NAME') .';charset=utf8',Config::get('DB_USER'),Config::get('DB_PASS'),
-            //         [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+            $pdo = new PDO('mysql:host='. Config::get('DB_HOST') .';dbname='. Config::get('DB_NAME') .';charset=utf8',Config::get('DB_USER'),Config::get('DB_PASS'),
+                    [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
 
             // $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'yuto', '1234',
                         //    [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
-            $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'webuser', 'abccsd2',
-                    [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
+            // $pdo = new PDO('mysql:host=localhost;dbname=hackathon_210;charset=utf8', 'webuser', 'abccsd2',
+            //         [PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC]);
         } catch (PDOException $e) {
             exit('Error connecting ' . $e);
         }
@@ -117,6 +117,24 @@ class setuyaku_DAO extends Config
         }
 
     }
+
+    //予想支出情報取得
+    function get_examount($id,$dow){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM examounts WHERE user_id = ? && dow = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->bindValue(2, $dow, PDO::PARAM_STR);
+        $ps->execute();
+
+        if($examount_data = $ps->fetch(PDO::FETCH_ASSOC)){
+            print json_encode($examount_data['exAmount']);
+        }else{
+            print json_encode("情報の取得に失敗しました。");
+        }
+    }
+
+    //節約総額加算
 
         
 }
