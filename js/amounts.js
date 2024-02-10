@@ -10,6 +10,8 @@ const vm = new Vue({
         today: "今日",
         dow: "",
         ex_amount: 0,
+        saving: 0,
+        exAmount: 0,
     },
     mounted() {
       this.today = this.getDate_today(1);
@@ -17,6 +19,7 @@ const vm = new Vue({
       this.user_name = sessionStorage.getItem('name');
       this.ex_amount = sessionStorage.getItem('targetAmount');
       this.dow = this.getDate_dow();
+      this.get_examount();
     },
     methods: {
         //支出登録処理
@@ -36,6 +39,23 @@ const vm = new Vue({
               .then(response => {
                 // レスポンスを処理するコード
                 alert(response.data);
+                this.saving = this.exAmount - this.totalNum;
+              })
+              .catch(error => {
+                // エラーハンドリングのコード
+                console.error(error);
+              });
+        },
+        get_examount(){
+            const url = "./application/api/examount_get.php";
+            const data = new FormData();
+            data.append('user_id',this.user_id);
+            data.append('dow', this.dow);
+
+            axios.post(url, data)
+              .then(response => {
+                // レスポンスを処理するコード
+                this.exAmount = response.data;
               })
               .catch(error => {
                 // エラーハンドリングのコード
