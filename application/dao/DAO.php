@@ -78,7 +78,7 @@ class setuyaku_DAO extends Config
     }
 
     //支出登録
-    function amount_data_set($dow,$amount,$id,$food_ex,$trans_ex,$enterme_ex,$others,$today){
+    function set_amount_data($dow,$amount,$id,$food_ex,$trans_ex,$enterme_ex,$others,$today){
         $pdo = $this->dbconnect();
         $sql = "SELECT * FROM amounts WHERE user_id = ? && today = ?";
         $ps = $pdo->prepare($sql);
@@ -117,6 +117,42 @@ class setuyaku_DAO extends Config
         }
 
     }
+    //予想金額登録
+    function set_examount_data($dow,$amount,$id,$food_ex,$trans_ex,$enterme_ex,$others){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM amounts WHERE user_id = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->execute();
+        //既にこの日にデータを登録していたら更新処理、していないなら登録
+        if($data = $ps->fetch(PDO::FETCH_ASSOC)){
+            $sql = 'UPDATE examounts SET dow = ?, exAmount = ?,  user_id = ?, food_ex = ?,trans_ex = ?,enterme_ex = ?, others = ? WHERE user_id = ?';
+            $ps = $pdo->prepare($sql);
+            $ps->bindValue(1, $dow, PDO::PARAM_STR);
+            $ps->bindValue(2, $amount, PDO::PARAM_INT);
+            $ps->bindValue(3, $id, PDO::PARAM_INT);
+            $ps->bindValue(4, $food_ex, PDO::PARAM_INT);
+            $ps->bindValue(5, $trans_ex, PDO::PARAM_INT);
+            $ps->bindValue(6, $enterme_ex, PDO::PARAM_INT);
+            $ps->bindValue(7, $others, PDO::PARAM_INT);
+            $ps->bindValue(8, $id, PDO::PARAM_INT);
+            $ps->execute();
+            print json_encode("更新成功");
+        }else{
+            $sql = 'INSERT INTO examounts(dow,exAmount,user_id,food_ex,trans_ex,enterme_ex,others) VALUES (?,?,?,?,?,?,?)';
+            $ps = $pdo->prepare($sql);
+            $ps->bindValue(1, $dow, PDO::PARAM_STR);
+            $ps->bindValue(2, $amount, PDO::PARAM_INT);
+            $ps->bindValue(3, $id, PDO::PARAM_INT);
+            $ps->bindValue(4, $food_ex, PDO::PARAM_INT);
+            $ps->bindValue(5, $trans_ex, PDO::PARAM_INT);
+            $ps->bindValue(6, $enterme_ex, PDO::PARAM_INT);
+            $ps->bindValue(7, $others, PDO::PARAM_INT);
+            $ps->execute();
+            print json_encode("登録成功");
+        }
+
+    }
 
     //予想支出情報取得
     function get_examount($id,$dow){
@@ -134,8 +170,95 @@ class setuyaku_DAO extends Config
         }
     }
 
-    //節約総額加算
+    //支出実績取得
+    function get_amount($id,$dow){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM amounts WHERE user_id = ? && dow = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->bindValue(2, $dow, PDO::PARAM_STR);
+        $ps->execute();
 
+        if($amount_data = $ps->fetch(PDO::FETCH_ASSOC)){
+            print json_encode($amount_data['Amount']);
+        }else{
+            print json_encode("情報の取得に失敗しました。");
+        }
+    }
         
+    //4つの支出予測データをそれぞれ取得する
+    function get_examounts($id,$dow){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM examounts WHERE user_id = ? && dow = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->bindValue(2, $dow, PDO::PARAM_STR);
+        $ps->execute();
+
+        if($examount_data = $ps->fetch(PDO::FETCH_ASSOC)){
+            print json_encode([$examount_data['food_ex'], $examount_data['trans_ex'], $examount_data['enterme_ex'], $examount_data['others']]);
+        }else{
+            print json_encode("情報の取得に失敗しました。");
+        }
+    }
+
+    //4つの支出データをそれぞれ取得する
+    function get_amounts($id,$dow){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM amounts WHERE user_id = ? && dow = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_INT);
+        $ps->bindValue(2, $dow, PDO::PARAM_STR);
+        $ps->execute();
+
+        if($amount_data = $ps->fetch(PDO::FETCH_ASSOC)){
+            print json_encode([$amount_data['food_ex'], $amount_data['trans_ex'], $amount_data['enterme'], $amount_data['others'], $amount_data['date']]);
+        }else{
+            print json_encode("情報の取得に失敗しました。");
+        }
+    }
+
+    //目標金額の設定
+    function set_target_amount($id, $ta){
+        $pdo = $this->dbconnect();
+        //既に登録されているメールアドレスかどうかを確認する
+        $sql = "SELECT * FROM users WHERE user_id = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_STR);
+        $ps->execute();
+        $record = $ps->fetch();
+
+        if(strcmp($record['id'], $record) == 0){
+            print json_encode(1);
+        }else{
+            $sql = 'UPDATE users SET targetAmount = ?; WHERE user_id = ?';
+            $ps = $pdo->prepare($sql);
+            $ps->bindValue(1, $ta, PDO::PARAM_STR);
+            $ps->bindValue(2, $id, PDO::PARAM_STR);
+            $ps->execute();
+            print json_encode(0);
+        }
+    }
+
+    //欲しいものの設定
+    function set_target_name($id, $tn){
+        $pdo = $this->dbconnect();
+        $sql = "SELECT * FROM users WHERE user_id = ?";
+        $ps = $pdo->prepare($sql);
+        $ps->bindValue(1, $id, PDO::PARAM_STR);
+        $ps->execute();
+        $record = $ps->fetch();
+
+        if(strcmp($record['id'], $record) == 0){
+            print json_encode(1);
+        }else{
+            $sql = 'UPDATE users SET targetName = ?; WHERE user_id = ?';
+            $ps = $pdo->prepare($sql);
+            $ps->bindValue(1, $tn, PDO::PARAM_STR);
+            $ps->bindValue(2, $id, PDO::PARAM_STR);
+            $ps->execute();
+            print json_encode(0);
+        }
+    }
 }
 ?>
