@@ -3,7 +3,7 @@ require_once "../dao/DAO.php";
 $dbm = new setuyaku_DAO();
 
 try{
-    $dbm->user_login($_POST["user_mail"],$_POST["user_pass"]);
+    $dbm->get_examounts($_POST['user_id'],$_POST['dow']);
 }catch(Exception $e){
 
 }

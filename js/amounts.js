@@ -24,7 +24,7 @@ const vm = new Vue({
     methods: {
         //支出登録処理
         set_amounts_data() {          
-            const url = "./application/api/amount_data_set.php";
+            const url = "./application/api/amountDataSet.php";
             const data = new FormData();
             data.append('dow', this.dow);
             data.append('Amount', this.totalNum);
@@ -47,7 +47,7 @@ const vm = new Vue({
               });
         },
         get_examount(){
-            const url = "./application/api/examount_get.php";
+            const url = "./application/api/getExAmount.php";
             const data = new FormData();
             data.append('user_id',this.user_id);
             data.append('dow', this.dow);
