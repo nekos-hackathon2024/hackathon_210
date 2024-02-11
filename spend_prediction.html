@@ -62,7 +62,7 @@
                         <p class=cost>食費</p>
                     </div>
                     <div class="bar">
-                        <input type="number" min="0" class="form content"></input>
+                        <input type="number" min="0" class="form content" v-model="food_ex"></input>
                     </div>
                     <div class="money">円</div>
                 </div>
@@ -73,7 +73,7 @@
                         <p class=cost>交通費</p>
                     </div>
                     <div class="bar">
-                        <input type="number" min="0" class="form content"></input>
+                        <input type="number" min="0" class="form content" v-model="trans_ex"></input>
                     </div>
                     <div class="money">円</div>
                 </div>
@@ -84,7 +84,7 @@
                         <p class=cost>交際費</p>
                     </div>
                     <div class="bar">
-                        <input type="number" min="0" class="form content"></input>
+                        <input type="number" min="0" class="form content" v-model="enterme_ex"></input>
                     </div>
                     <div class="money">円</div>
                 </div>
@@ -95,7 +95,7 @@
                         <p class=cost>その他</p>
                     </div>
                     <div class="bar">
-                        <input type="number" min="0" class="form content"></input>
+                        <input type="number" min="0" class="form content" v-model="others"></input>
                     </div>
                     <div class="money">円</div>
                 </div>
@@ -103,8 +103,7 @@
             </div>
             <div class="btn content input" @click="set_amounts_data()">支出を登録する</div>
 
-            <table>
-
+            <table id="expenseTable">
                 <tr>
                     <th></th>
                     <th>食費</th>
@@ -112,63 +111,55 @@
                     <th>交際費</th>
                     <th>その他</th>
                 </tr>
-
                 <tr>
                     <th>月</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_monday"></td>
+                    <td id="cell_monday_transport"></td>
+                    <td id="cell_monday_social"></td>
+                    <td id="cell_monday_other"></td>
                 </tr>
-
                 <tr>
                     <th>火</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_tuesday"></td>
+                    <td id="cell_tuesday_transport"></td>
+                    <td id="cell_tuesday_social"></td>
+                    <td id="cell_tuesday_other"></td>
                 </tr>
-
                 <tr>
                     <th>水</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_wednesday"></td>
+                    <td id="cell_wednesday_transport"></td>
+                    <td id="cell_wednesday_social"></td>
+                    <td id="cell_wednesday_other"></td>
                 </tr>
-
                 <tr>
                     <th>木</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_thursday"></td>
+                    <td id="cell_thursday_transport"></td>
+                    <td id="cell_thursday_social"></td>
+                    <td id="cell_thursday_other"></td>
                 </tr>
-
                 <tr>
                     <th>金</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_friday"></td>
+                    <td id="cell_friday_transport"></td>
+                    <td id="cell_friday_social"></td>
+                    <td id="cell_friday_other"></td>
                 </tr>
-
                 <tr>
                     <th>土</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_saturday"></td>
+                    <td id="cell_saturday_transport"></td>
+                    <td id="cell_saturday_social"></td>
+                    <td id="cell_saturday_other"></td>
                 </tr>
-
                 <tr>
                     <th>日</th>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td id="cell_sunday"></td>
+                    <td id="cell_sunday_transport"></td>
+                    <td id="cell_sunday_social"></td>
+                    <td id="cell_sunday_other"></td>
                 </tr>
-
             </table>
 
             <div class="btn content reg" @click="createUser()">支出を登録する</div>
@@ -178,7 +169,7 @@
                     <div class="input-group">
                         <label for="goalAmount">目標金額</label>
                         <div class="bar">
-                            <input type="number" min="0" class="form amount"></input>
+                            <input type="number" min="0" class="form amount" v-model="targetAmount"></input>
                         </div>
                         <div class="money">円</div>
                     </div>
@@ -208,6 +199,34 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <!-- JSの読み込み -->
         <script src="./js/predictionController.js"></script>
+
+        <script>
+            // ダミーのデータベース取得関数（実際にはデータベースからデータを取得する処理に変更）
+            function getDatabaseValue(day, category) {
+              // ここではダミーデータを返す
+              return `${day}_${category}_data`;
+            }
+        
+            // 表にデータをセットする関数
+            function setDataToTable() {
+              const days = ["monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"];
+              const categories = ["", "_transport", "_social", "_other"];
+        
+              for (const day of days) {
+                for (const category of categories) {
+                  const cellId = `cell_${day}${category}`;
+                  const cell = document.getElementById(cellId);
+        
+                  // ダミーデータベースから取得した値をセルにセット
+                  const databaseValue = getDatabaseValue(day, category);
+                  cell.textContent = databaseValue;
+                }
+              }
+            }
+        
+            // ページ読み込み時にデータをセット
+            setDataToTable();
+          </script>
 </body>
 
 </html>
