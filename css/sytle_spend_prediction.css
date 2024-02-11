@@ -183,7 +183,7 @@ body{
 
 
 .content {
-    text-align: left;
+    text-align: right;
     padding: 2px;
     font-size: 20px;
 }
@@ -237,4 +237,9 @@ table{
 th,td{
     border:solid 2px #000000;
     padding: 1px 5px;
+}
+
+.bar .form.amount{
+    margin-left: 20%;
+    width: 70%;
 }
