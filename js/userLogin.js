@@ -26,7 +26,7 @@ const vm = new Vue({
                   sessionStorage.setItem('id',response.data['user_id']);
                   sessionStorage.setItem('name',response.data['user_name']);
                   sessionStorage.setItem('targetAmount',response.data['targetAmount']);
-                  window.location.assign("./spend_input.html");
+                  window.location.assign("./spend_prediction.html");
                 }else if(response.data === 1){
                   console.log("失敗時分岐");
                   console.log(response.data);
